@@ -63,7 +63,7 @@ public class BinarySearchLibrary {
 		}
 
 
-		if (list.get(high).equals(target)) {
+		if (comp.compare(target, list.get(high)) == 0) {
 			/* Why do you always go out and */ return high;
 		} else {
 			return -1;
