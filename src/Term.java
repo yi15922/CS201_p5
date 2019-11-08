@@ -29,7 +29,16 @@ public class Term implements Comparable<Term> {
 	 *             if weight is negative
 	 */
 	public Term(String word, double weight) {
-		// TODO: Complete Term constructor, throw exceptions
+		if (word == null) {
+			throw new NullPointerException("Null word");
+		}
+
+		if (weight < 0) {
+			throw new IllegalArgumentException("Negative weight " + weight);
+		}
+
+		myWord = word;
+		myWeight = weight;
 	}
 	
 	/**
@@ -54,8 +63,7 @@ public class Term implements Comparable<Term> {
 	 * @return this Term's weight
 	 */
 	public double getWeight() {
-		// TODO: Change implementation
-		return 0;
+		return myWeight;
 	}
 
 	/**
@@ -100,7 +108,45 @@ public class Term implements Comparable<Term> {
 		 *            - Two Terms whose words are being compared
 		 */
 		public int compare(Term v, Term w) {
-			// TODO: Implement compare
+			int numChars = 0;
+
+			// Sets numChars to be the least number of characters that need to be compared.
+
+			if (v.getWord().length() < this.myPrefixSize || w.getWord().length() < this.myPrefixSize) {
+				numChars = Math.min(v.getWord().length(), w.getWord().length());
+			} else {
+				numChars = this.myPrefixSize;
+			}
+
+
+			// Compare the first numChars characters and return if difference is found
+			for (int i = 0; i < numChars; i++) {
+				if (v.getWord().charAt(i) > w.getWord().charAt(i)) {
+					return 1;
+				} else if (v.getWord().charAt(i) < w.getWord().charAt(i)) {
+					return -1;
+				}
+			}
+
+			// The below only runs if the first numChars characters are all equal
+
+
+			// If the first numChar characters are equal and numChar is equal to myPrefixSize
+			// return 0 because all compared chars are equal.
+			if (numChars == this.myPrefixSize) {
+				return 0;
+			}
+
+			// If the first numChar characters are equal and more than numChar characters are
+			// asked to be compared, the longer word is greater
+			if (numChars < this.myPrefixSize) {
+				if (v.getWord().length() > w.getWord().length()) {
+					return 1;
+				} else if (v.getWord().length() < w.getWord().length()){
+					return -1;
+				}
+			}
+
 			return 0;
 		}
 	

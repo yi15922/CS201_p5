@@ -44,11 +44,31 @@ public class BinarySearchLibrary {
 		
 		int low = -1;
 		int high = list.size()-1;
-		
+
 		// (low,high] contains target
-		// TODO: write method
-		
-		return -1;
+
+		while (low + 1 != high) {
+			if (list.subList(low + 1, high).contains(target)) {
+				int mid = (low + 1 + high) / 2;
+				int cmp = comp.compare(list.get(mid), target);
+
+				if (cmp >= 0) {
+					high = mid;
+				} else if (cmp < 0) {
+					low = mid;
+				}
+			} else {
+				break;
+			}
+		}
+
+
+		if (list.get(high).equals(target)) {
+			/* Why do you always go out and */ return high;
+		} else {
+			return -1;
+		}
+
 	}
 
 	 /**                                                                                          
@@ -73,9 +93,26 @@ public class BinarySearchLibrary {
 		int high = list.size();
 		
 		// target in [low,high)
-		// TODO: write  method
-		
-		return -1;
+		while (low + 1 != high) {
+			if (list.subList(low, high).contains(target)) {
+				int mid = (low + high) / 2;
+				int cmp = comp.compare(list.get(mid), target);
+
+				if (cmp > 0) {
+					high = mid;
+				} else if (cmp <= 0) {
+					low = mid;
+				}
+			} else {
+				break;
+			}
+		}
+
+		if (list.get(low).equals(target)) {
+			return low;
+		} else {
+			return -1;
+		}
 	}
 	
 }
