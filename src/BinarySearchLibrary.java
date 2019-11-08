@@ -47,19 +47,21 @@ public class BinarySearchLibrary {
 
 		// (low,high] contains target
 
-		while (low + 1 != high) {
-			if (list.subList(low + 1, high).contains(target)) {
-				int mid = (low + high) / 2;
-				int cmp = comp.compare(list.get(mid), target);
+		if (list == null) {
+			return -1;
+		}
 
-				if (cmp >= 0) {
-					high = mid;
-				} else if (cmp < 0) {
-					low = mid;
-				}
-			} else {
-				break;
+		while (low + 1 != high) {
+
+			int mid = (low + high) / 2;
+			int cmp = comp.compare(list.get(mid), target);
+
+			if (cmp >= 0) {
+				high = mid;
+			} else if (cmp < 0) {
+				low = mid;
 			}
+
 		}
 
 
