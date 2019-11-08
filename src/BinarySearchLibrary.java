@@ -108,7 +108,7 @@ public class BinarySearchLibrary {
 			}
 		}
 
-		if (list.get(low).equals(target)) {
+		if (comp.compare(list.get(low), target) == 0) {
 			return low;
 		} else {
 			return -1;
