@@ -87,9 +87,12 @@ public class HashListAutocomplete implements Autocompletor{
     @Override
     public int sizeInBytes() {
         if (mySize == 0) {
-            for(Term t : myTerms) {
-                mySize += BYTES_PER_DOUBLE +
-                        BYTES_PER_CHAR*t.getWord().length();
+            for(String t : myMap.keySet()) {
+                mySize += myMap.get(t).size() * BYTES_PER_DOUBLE +
+                        BYTES_PER_CHAR * t.length();
+                for (Term term : myMap.get(t)) {
+                    mySize += term.getWord().length();
+                }
             }
         }
         return mySize;
