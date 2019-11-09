@@ -91,7 +91,7 @@ public class HashListAutocomplete implements Autocompletor{
                 mySize += myMap.get(t).size() * BYTES_PER_DOUBLE +
                         BYTES_PER_CHAR * t.length();
                 for (Term term : myMap.get(t)) {
-                    mySize += term.getWord().length();
+                    mySize += BYTES_PER_CHAR * term.getWord().length();
                 }
             }
         }
