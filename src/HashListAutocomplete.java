@@ -94,7 +94,7 @@ public class HashListAutocomplete implements Autocompletor{
             }
             mySize += BYTES_PER_DOUBLE * theSet.size();
             for (Term t : theSet) {
-                mySize += BYTES_PER_CHAR * t.toString().length()
+                mySize += BYTES_PER_CHAR * t.toString().length();
             }
 
 
