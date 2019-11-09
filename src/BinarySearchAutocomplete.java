@@ -112,34 +112,30 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		if (first == -1 || k == 0) {               // prefix not found
 			return new ArrayList<>();
 		}
-		List<Term> smallList = Arrays.asList(myTerms).subList(first, last + 1);
+		//List<Term> smallList = Arrays.asList(myTerms).subList(first, last + 1);
 
 
 		PriorityQueue<Term> pq =
 				new PriorityQueue<Term>(Comparator.comparing(Term::getWeight));
 
-		if (smallList.size() <= k) {
-			pq.addAll(smallList);
-		} else {
-			for (Term t : smallList) {
-				//System.out.println(t.toString());
-				// Keep adding things until specified k is reached
-				if (pq.size() < k) {
-					pq.add(t);
-				} else
-					// if specified size is reached and the current word has a
-					// higher weight than the lowest in priority queue, replace it.
-					if (pq.peek().getWeight() < t.getWeight()) {
-						pq.remove();
-						pq.add(t);
-					}
-
-			}
+		for (int i = first; i <= last; i++) {
+			//System.out.println(t.toString());
+			// Keep adding things until specified k is reached
+			if (pq.size() < k) {
+				pq.add(myTerms[i]);
+			} else
+				// if specified size is reached and the current word has a
+				// higher weight than the lowest in priority queue, replace it.
+				if (pq.peek().getWeight() < myTerms[i].getWeight()) {
+					pq.remove();
+					pq.add(myTerms[i]);
+				}
 		}
+
 		LinkedList<Term> ret = new LinkedList<>();
 		int numResults = pq.size();
 
-		System.out.println(ret.toString());
+		//System.out.println(ret.toString());
 
 
 		for (int i = 0; i < numResults; i++) {
