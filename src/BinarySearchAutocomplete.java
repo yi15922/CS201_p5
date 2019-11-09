@@ -100,7 +100,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	@Override
 	public List<Term> topMatches(String prefix, int k) {
 
-		if (k <= 0) {
+		if (k < 0) {
 			throw new IllegalArgumentException("Illegal value of k:"+k);
 		}
 
@@ -109,7 +109,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		int first = firstIndexOf(myTerms, dummy, comp);
 		int last = lastIndexOf(myTerms, dummy, comp);
 
-		if (first == -1) {               // prefix not found
+		if (first == -1 || k == 0) {               // prefix not found
 			return new ArrayList<>();
 		}
 
