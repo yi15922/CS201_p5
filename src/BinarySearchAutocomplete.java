@@ -100,10 +100,10 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	@Override
 	public List<Term> topMatches(String prefix, int k) {
 
-		if (k < 0) {
+		if (k <= 0) {
 			throw new IllegalArgumentException("Illegal value of k:"+k);
 		}
-		
+
 		Term dummy = new Term(prefix, 0);
 		Term.PrefixOrder comp = new Term.PrefixOrder(prefix.length());
 		int first = firstIndexOf(myTerms, dummy, comp);
