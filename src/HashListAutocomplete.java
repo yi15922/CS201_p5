@@ -19,7 +19,9 @@ public class HashListAutocomplete implements Autocompletor{
 
     @Override
     public List<Term> topMatches(String prefix, int k) {
-        return null;
+        List<Term> ret = myMap.get(prefix);
+
+        return ret.subList(0, k);
     }
 
     @Override
@@ -54,12 +56,15 @@ public class HashListAutocomplete implements Autocompletor{
             //System.out.println(first + " " + last);
 
             if (first == -1 || prefix.length() == 0) {               // prefix not found
-                myMap.put(prefix, new ArrayList<>());
+                continue;
             }
 
-            myMap.get(prefix).addAll(Arrays.asList(myTerms).subList(first, last + 1));
+            List<Term> temp = new ArrayList<>(Arrays.asList(myTerms).subList(first, last + 1));
+            Collections.sort(temp, Comparator.comparing(Term::getWeight).reversed());
 
-            //System.out.println(prefix + myMap.get(prefix).toString());
+            myMap.get(prefix).addAll(temp);
+
+            System.out.println(prefix + myMap.get(prefix).toString());
 
 
         }
