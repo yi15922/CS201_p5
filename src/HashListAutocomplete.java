@@ -43,16 +43,25 @@ public class HashListAutocomplete implements Autocompletor{
                 }
             }
         }
+
+        //System.out.println(Arrays.asList(myTerms).toString());
         for (String prefix : myMap.keySet()) {
             Term dummy = new Term(prefix, 0);
+            //System.out.println(dummy.toString());
             Term.PrefixOrder comp = new Term.PrefixOrder(prefix.length());
-            for (Term t : myTerms) {
-                if (comp.compare(dummy, t) == 0) {
-                    myMap.get(prefix).add(t);
+            int first = BinarySearchAutocomplete.firstIndexOf(myTerms, dummy, comp);
+            int last = BinarySearchAutocomplete.lastIndexOf(myTerms, dummy, comp);
+            //System.out.println(first + " " + last);
 
-                }
+            if (first == -1 || prefix.length() == 0) {               // prefix not found
+                myMap.put(prefix, new ArrayList<>());
             }
-            System.out.println(prefix + myMap.get(prefix));
+
+            myMap.get(prefix).addAll(Arrays.asList(myTerms).subList(first, last + 1));
+
+            //System.out.println(prefix + myMap.get(prefix).toString());
+
+
         }
 
     }
@@ -64,6 +73,6 @@ public class HashListAutocomplete implements Autocompletor{
 
 
     public static void main(String[] args){
-        HashListAutocomplete test = new HashListAutocomplete(new String[]{ "ape", "app", "ban", "bat", "bee", "car", "cat" }, new double[]{6, 4, 2, 3, 5, 7, 1});
+        HashListAutocomplete test = new HashListAutocomplete(new String[]{ "ape", "apsadfp", "ban", "bat", "bee", "car", "cat" }, new double[]{6, 4, 2, 3, 5, 7, 1});
     }
 }
