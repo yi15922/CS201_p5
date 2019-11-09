@@ -19,8 +19,12 @@ public class HashListAutocomplete implements Autocompletor{
 
     @Override
     public List<Term> topMatches(String prefix, int k) {
-        List<Term> ret = myMap.get(prefix);
-
+        List<Term> ret;
+        if (myMap.containsKey(prefix)) {
+            ret = myMap.get(prefix);
+        } else {
+            return new ArrayList<>();
+        }
         return ret.subList(0, Math.min(k, ret.size()));
     }
 
@@ -85,5 +89,6 @@ public class HashListAutocomplete implements Autocompletor{
 
     public static void main(String[] args){
         HashListAutocomplete test = new HashListAutocomplete(new String[]{ "ape", "apsadfp", "ban", "bat", "bee", "car", "cat" }, new double[]{6, 4, 2, 3, 5, 7, 1});
+        System.out.println(test.topMatches("p", 10));
     }
 }
