@@ -88,12 +88,13 @@ public class HashListAutocomplete implements Autocompletor{
     public int sizeInBytes() {
         if (mySize == 0) {
             for(String t : myMap.keySet()) {
-                mySize += myMap.get(t).size() * BYTES_PER_DOUBLE +
-                        BYTES_PER_CHAR * t.length();
-                for (Term term : myMap.get(t)) {
-                    mySize += BYTES_PER_CHAR * term.getWord().length();
-                }
+                mySize += BYTES_PER_CHAR * t.length();
             }
+            for (Term term : myTerms) {
+                 mySize += BYTES_PER_DOUBLE +
+                         BYTES_PER_CHAR * term.toString().length();
+
+             }
         }
         return mySize;
     }
