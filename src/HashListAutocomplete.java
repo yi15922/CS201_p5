@@ -21,7 +21,7 @@ public class HashListAutocomplete implements Autocompletor{
     public List<Term> topMatches(String prefix, int k) {
         List<Term> ret = myMap.get(prefix);
 
-        return ret.subList(0, k);
+        return ret.subList(0, Math.min(k, ret.size()));
     }
 
     @Override
@@ -73,7 +73,13 @@ public class HashListAutocomplete implements Autocompletor{
 
     @Override
     public int sizeInBytes() {
-        return 0;
+        if (mySize == 0) {
+            for(Term t : myTerms) {
+                mySize += BYTES_PER_DOUBLE +
+                        BYTES_PER_CHAR*t.getWord().length();
+            }
+        }
+        return mySize;
     }
 
 
