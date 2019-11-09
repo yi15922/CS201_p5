@@ -28,8 +28,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	 *            weight[i].
 	 * @return a BinarySearchAutocomplete whose myTerms object has myTerms[i] =
 	 *         a Term with word terms[i] and weight weights[i].
-	 * @throws a
-	 *             NullPointerException if either argument passed in is null
+	 * @throws a NullPointerException if either argument passed in is null
 	 */
 	public BinarySearchAutocomplete(String[] terms, double[] weights) {
 		if (terms == null || weights == null) {
@@ -100,7 +99,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	
 	@Override
 	public List<Term> topMatches(String prefix, int k) {
-		Term dummy = new Term(prefix,0);
+		Term dummy = new Term(prefix, 0);
 		Term.PrefixOrder comp = new Term.PrefixOrder(prefix.length());
 		int first = firstIndexOf(myTerms, dummy, comp);
 		int last = lastIndexOf(myTerms, dummy, comp);
@@ -109,11 +108,35 @@ public class BinarySearchAutocomplete implements Autocompletor {
 			return new ArrayList<>();
 		}
 
-		// write code here
+		PriorityQueue<Term> pq =
+				new PriorityQueue<Term>(Comparator.comparing(Term::getWeight));
 
-		return null;
-	
+		for (Term t : Arrays.asList(myTerms).subList(first, last + 1)) {
+			//System.out.println(t.toString());
+			// Keep adding things until specified k is reached
+			if (pq.size() < k) {
+				pq.add(t);
+			} else
+			// if specified size is reached and the current word has a
+			// higher weight than the lowest in priority queue, replace it.
+			if (pq.peek().getWeight() < t.getWeight()) {
+				pq.remove();
+				pq.add(t);
+			}
+		}
+		// return k results if there are that many, if not, return all in pq
+
+		int numResults = Math.min(k, pq.size());
+		LinkedList<Term> ret = new LinkedList<>();
+
+		for (int i = 0; i < numResults; i++) {
+			// adds elements of pq into the list highest weight first
+			ret.addFirst(pq.remove());
+		}
+
+		return ret;
 	}
+
 
 	@Override
 	public void initialize(String[] terms, double[] weights) {
