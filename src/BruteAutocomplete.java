@@ -27,6 +27,9 @@ public class BruteAutocomplete implements Autocompletor {
 		if (terms.length != weights.length) {
 			throw new IllegalArgumentException("terms and weights are not the same length");
 		}
+
+
+
 		initialize(terms,weights);
 	}
 

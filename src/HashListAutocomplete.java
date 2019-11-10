@@ -1,12 +1,30 @@
 import java.util.*;
 
-
+/**
+ * Implements Autocompleter and uses a Map to store all possibe search results
+ * Slow to initialize, but very fast a returning search results. Takes up more memory.
+ * @author Yi Chen
+ */
 public class HashListAutocomplete implements Autocompletor{
     private static final int MAX_PREFIX = 10;
     private Map<String, List<Term>> myMap = new HashMap<>();
     private int mySize;
     private Term[] myTerms;
 
+
+    /**
+     * Given arrays of words and weights, initialize myTerms to a HashMap
+     * containing all possible prefixes as keys and all possible search results
+     * as values.
+     *
+     * @param terms
+     *            - A list of words to form terms from
+     * @param weights
+     *            - A corresponding list of weights, such that terms[i] has
+     *            weight[i].
+     * @return a BinarySearchAutocomplete with a map of all possible search results.
+     * @throws a NullPointerException if either argument passed in is null
+     */
     public HashListAutocomplete(String[] terms, double[] weights){
         if (terms == null || weights == null) {
             throw new NullPointerException("One or more arguments null");
@@ -16,7 +34,12 @@ public class HashListAutocomplete implements Autocompletor{
     }
 
 
-
+    /**
+     * Gets and returns the top matches of a given prefix
+     * @param prefix a String specifying the prefix to search for
+     * @param k int number of top matches to return
+     * @return a List of top matches sorted in descending order by weight
+     */
     @Override
     public List<Term> topMatches(String prefix, int k) {
         if (k < 0) {
@@ -37,6 +60,13 @@ public class HashListAutocomplete implements Autocompletor{
         return ret.subList(0, Math.min(k, ret.size()));
     }
 
+
+    /**
+     * Initializes the object by populating the map with search results.
+     *
+     * @param terms is array of Strings for words in each Term
+     * @param weights is corresponding weight for word in terms
+     */
     @Override
     public void initialize(String[] terms, double[] weights) {
         myTerms = new Term[terms.length];
@@ -76,13 +106,17 @@ public class HashListAutocomplete implements Autocompletor{
 
             myMap.get(prefix).addAll(temp);
 
-            System.out.println(prefix + myMap.get(prefix).toString());
+            //System.out.println(prefix + myMap.get(prefix).toString());
 
 
         }
 
     }
 
+    /**
+     * Calculates the size of this object
+     * @return an int showing the size of this object in bytes.
+     */
     @Override
     public int sizeInBytes() {
         if (myMap.size() == 1) {
@@ -102,7 +136,7 @@ public class HashListAutocomplete implements Autocompletor{
             //System.out.println(mySize);
 
             for (Term t : theSet) {
-                System.out.println("Adding all strings in set: " + t.toString() + " " + t.getWord().length());
+                //System.out.println("Adding all strings in set: " + t.toString() + " " + t.getWord().length());
                 mySize += BYTES_PER_CHAR * t.getWord().length();
                 //System.out.println(mySize);
 
@@ -114,7 +148,6 @@ public class HashListAutocomplete implements Autocompletor{
         //System.out.println(mySize);
         return mySize;
     }
-
 
     private static void main(String[] args){
         HashListAutocomplete test = new HashListAutocomplete(new String[]{""}, new double[]{2});

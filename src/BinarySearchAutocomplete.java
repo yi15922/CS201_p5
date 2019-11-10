@@ -147,6 +147,12 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	}
 
 
+	/**
+	 * Fills myTerms with all Term objects given using the strings and doubles passed.
+	 * Sorts myTerms in alphabetical order.
+	 * @param terms is array of Strings for words in each Term
+	 * @param weights is corresponding weight for word in terms
+	 */
 	@Override
 	public void initialize(String[] terms, double[] weights) {
 		myTerms = new Term[terms.length];
@@ -157,7 +163,11 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		
 		Arrays.sort(myTerms);
 	}
-	
+
+	/**
+	 * Calculates the size of this object
+	 * @return an int showing the size of this object in bytes.
+	 */
 	@Override
 	public int sizeInBytes() {
 		if (mySize == 0) {
