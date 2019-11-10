@@ -49,12 +49,13 @@ public class HashListAutocomplete implements Autocompletor{
 
         for (int i = 1; i <= MAX_PREFIX; i++) {
             for (String t : terms) {
+                if (t.equals("")) {
+                    myMap.put("", new ArrayList<>());
+                }
                 if (t.length() >= i) {
 
                     myMap.putIfAbsent(t.substring(0, i), new ArrayList<>());
 
-                } else if (t.equals("")) {
-                    myMap.put("", new ArrayList<>());
                 }
             }
         }
@@ -96,7 +97,7 @@ public class HashListAutocomplete implements Autocompletor{
             mySize += BYTES_PER_DOUBLE * theSet.size();
             System.out.println("Adding all doubles in the set: " + theSet.size());
             for (Term t : theSet) {
-                System.out.println("Adding all strings in set: " + t.toString() + " " + t.toString().length());
+                System.out.println("Adding all strings in set: " + t.toString() + " " + t.getWord().length());
                 mySize += BYTES_PER_CHAR * t.toString().length();
             }
 
