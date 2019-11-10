@@ -89,11 +89,14 @@ public class HashListAutocomplete implements Autocompletor{
         if (mySize == 0) {
             Set<Term> theSet = new HashSet<>();
             for(String t : myMap.keySet()) {
+                System.out.println("Adding all lengths of keys: " + t.length());
                 mySize += BYTES_PER_CHAR * t.length();
                 theSet.addAll(myMap.get(t));
             }
             mySize += BYTES_PER_DOUBLE * theSet.size();
+            System.out.println("Adding all doubles in the set: " + theSet.size());
             for (Term t : theSet) {
+                System.out.println("Adding all strings in set: " + t.toString() + " " + t.toString().length());
                 mySize += BYTES_PER_CHAR * t.toString().length();
             }
 
