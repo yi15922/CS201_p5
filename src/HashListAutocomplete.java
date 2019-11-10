@@ -116,7 +116,7 @@ public class HashListAutocomplete implements Autocompletor{
     }
 
 
-    public static void main(String[] args){
+    private static void main(String[] args){
         HashListAutocomplete test = new HashListAutocomplete(new String[]{""}, new double[]{2});
         System.out.println(test.topMatches("", 10));
         System.out.println(test.sizeInBytes());
