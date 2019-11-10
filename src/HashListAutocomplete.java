@@ -53,8 +53,8 @@ public class HashListAutocomplete implements Autocompletor{
 
                     myMap.putIfAbsent(t.substring(0, i), new ArrayList<>());
 
-                } else {
-                    continue;
+                } else if (t.equals("")) {
+                    myMap.put("", new ArrayList<>());
                 }
             }
         }
