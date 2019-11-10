@@ -85,6 +85,9 @@ public class HashListAutocomplete implements Autocompletor{
 
     @Override
     public int sizeInBytes() {
+        if (myMap.size() == 1) {
+            return BYTES_PER_DOUBLE * myMap.size();
+        }
         if (mySize == 0) {
             Set<Term> theSet = new HashSet<>();
             for(String t : myMap.keySet()) {
@@ -114,7 +117,7 @@ public class HashListAutocomplete implements Autocompletor{
 
 
     public static void main(String[] args){
-        HashListAutocomplete test = new HashListAutocomplete(new String[]{"a", "b", "c", "d"}, new double[]{2, 1, 4, 3});
+        HashListAutocomplete test = new HashListAutocomplete(new String[]{""}, new double[]{2});
         System.out.println(test.topMatches("", 10));
         System.out.println(test.sizeInBytes());
     }
