@@ -50,12 +50,10 @@ public class HashListAutocomplete implements Autocompletor{
         for (int i = 1; i <= MAX_PREFIX; i++) {
             for (String t : terms) {
                 if (t.equals("")) {
-                    myMap.put("", new ArrayList<>());
+                    myMap.putIfAbsent("", new ArrayList<>());
                 }
                 if (t.length() >= i) {
-
                     myMap.putIfAbsent(t.substring(0, i), new ArrayList<>());
-
                 }
             }
         }
@@ -90,26 +88,34 @@ public class HashListAutocomplete implements Autocompletor{
         if (mySize == 0) {
             Set<Term> theSet = new HashSet<>();
             for(String t : myMap.keySet()) {
-                System.out.println("Adding all lengths of keys: " + t.length());
+                //System.out.println("Adding all lengths of keys: " + t.length());
                 mySize += BYTES_PER_CHAR * t.length();
                 theSet.addAll(myMap.get(t));
+                //System.out.println(mySize);
+
             }
             mySize += BYTES_PER_DOUBLE * theSet.size();
-            System.out.println("Adding all doubles in the set: " + theSet.size());
+            //System.out.println("Adding all doubles in the set: " + theSet.size());
+            //System.out.println(mySize);
+
             for (Term t : theSet) {
                 System.out.println("Adding all strings in set: " + t.toString() + " " + t.getWord().length());
-                mySize += BYTES_PER_CHAR * t.toString().length();
+                mySize += BYTES_PER_CHAR * t.getWord().length();
+                //System.out.println(mySize);
+
             }
 
 
 
         }
+        //System.out.println(mySize);
         return mySize;
     }
 
 
     public static void main(String[] args){
-        HashListAutocomplete test = new HashListAutocomplete(new String[]{ "ape", "apsadfp", "ban", "bat", "bee", "car", "cat" }, new double[]{6, 4, 2, 3, 5, 7, 1});
+        HashListAutocomplete test = new HashListAutocomplete(new String[]{"a", "b", "c", "d"}, new double[]{2, 1, 4, 3});
         System.out.println(test.topMatches("", 10));
+        System.out.println(test.sizeInBytes());
     }
 }
