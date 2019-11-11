@@ -1,5 +1,12 @@
 import java.util.*;
 
+
+
+// This is a temporary new branch to test another approach
+
+
+
+
 /**
  * Implements Autocompleter and uses a Map to store all possibe search results
  * Slow to initialize, but very fast a returning search results. Takes up more memory.
