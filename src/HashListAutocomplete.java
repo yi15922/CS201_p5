@@ -71,22 +71,20 @@ public class HashListAutocomplete implements Autocompletor{
      */
     @Override
     public void initialize(String[] terms, double[] weights) {
-        System.out.println(Arrays.asList(terms).toString());
+        //System.out.println(Arrays.asList(terms).toString());
 
         for (int i = 0; i < terms.length; i++) {
             for (int j = 0; j <= MAX_PREFIX; j++) {
-                if (terms[i].equals("")) {
-                    myMap.putIfAbsent("", new ArrayList<>());
-                    continue;
-                }
+
                 if (terms[i].length() >= j) {
                     myMap.putIfAbsent(terms[i].substring(0, j), new ArrayList<>());
                     myMap.get(terms[i].substring(0, j)).add(new Term(terms[i], weights[i]));
                     Collections.sort(myMap.get(terms[i].substring(0, j)), Comparator.comparing(Term::getWeight).reversed());
                 }
-                System.out.println(myMap.toString());
             }
         }
+        //System.out.println(myMap.toString());
+
 
         //System.out.println(Arrays.asList(myTerms).toString());
 
@@ -129,8 +127,8 @@ public class HashListAutocomplete implements Autocompletor{
     }
 
     public static void main(String[] args){
-        HashListAutocomplete test = new HashListAutocomplete(new String[]{"ape", "app", "ban", "bat", "bee", "car", "cat"}, new double[]{6, 4, 2, 3, 5, 7, 1});
-        System.out.println(test.topMatches("", 10));
-        System.out.println(test.sizeInBytes());
+        HashListAutocomplete test = new HashListAutocomplete(new String[]{"ape", "app", "ban", "bat", "bee", "car", "cat", ""}, new double[]{6, 4, 2, 3, 5, 7, 1, 10});
+        //System.out.println(test.topMatches("", 10));
+        //System.out.println(test.sizeInBytes());
     }
 }
