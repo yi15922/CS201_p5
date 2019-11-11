@@ -79,14 +79,14 @@ public class HashListAutocomplete implements Autocompletor{
                 if (terms[i].length() >= j) {
                     myMap.putIfAbsent(terms[i].substring(0, j), new ArrayList<>());
                     myMap.get(terms[i].substring(0, j)).add(new Term(terms[i], weights[i]));
-                    Collections.sort(myMap.get(terms[i].substring(0, j)), Comparator.comparing(Term::getWeight).reversed());
                 }
             }
         }
-        //System.out.println(myMap.toString());
+        for (String key : myMap.keySet()) {
+            myMap.get(key).sort(Comparator.comparing(Term::getWeight).reversed());
+        }
+        System.out.println(myMap.toString());
 
-
-        //System.out.println(Arrays.asList(myTerms).toString());
 
     }
 
