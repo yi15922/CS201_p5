@@ -16,7 +16,6 @@ public class HashListAutocomplete implements Autocompletor{
     private static final int MAX_PREFIX = 10;
     private Map<String, List<Term>> myMap = new HashMap<>();
     private int mySize;
-    private Term[] myTerms;
 
 
     /**
@@ -55,11 +54,7 @@ public class HashListAutocomplete implements Autocompletor{
 
         List<Term> ret;
 
-        if (prefix.equals("")) {
-            ret = Arrays.asList(myTerms);
-            Collections.sort(ret, Comparator.comparing(Term::getWeight).reversed());
-
-        } else if (myMap.containsKey(prefix)) {
+        if (myMap.containsKey(prefix)) {
             ret = myMap.get(prefix);
         } else {
             return new ArrayList<>();
@@ -76,47 +71,24 @@ public class HashListAutocomplete implements Autocompletor{
      */
     @Override
     public void initialize(String[] terms, double[] weights) {
-        myTerms = new Term[terms.length];
+        System.out.println(Arrays.asList(terms).toString());
 
         for (int i = 0; i < terms.length; i++) {
-            myTerms[i] = new Term(terms[i], weights[i]);
-        }
-
-        Arrays.sort(myTerms);
-
-        for (int i = 1; i <= MAX_PREFIX; i++) {
-            for (String t : terms) {
-                if (t.equals("")) {
+            for (int j = 0; j <= MAX_PREFIX; j++) {
+                if (terms[i].equals("")) {
                     myMap.putIfAbsent("", new ArrayList<>());
+                    continue;
                 }
-                if (t.length() >= i) {
-                    myMap.putIfAbsent(t.substring(0, i), new ArrayList<>());
+                if (terms[i].length() >= j) {
+                    myMap.putIfAbsent(terms[i].substring(0, j), new ArrayList<>());
+                    myMap.get(terms[i].substring(0, j)).add(new Term(terms[i], weights[i]));
+                    Collections.sort(myMap.get(terms[i].substring(0, j)), Comparator.comparing(Term::getWeight).reversed());
                 }
+                System.out.println(myMap.toString());
             }
         }
 
         //System.out.println(Arrays.asList(myTerms).toString());
-        for (String prefix : myMap.keySet()) {
-            Term dummy = new Term(prefix, 0);
-            //System.out.println(dummy.toString());
-            Term.PrefixOrder comp = new Term.PrefixOrder(prefix.length());
-            int first = BinarySearchAutocomplete.firstIndexOf(myTerms, dummy, comp);
-            int last = BinarySearchAutocomplete.lastIndexOf(myTerms, dummy, comp);
-            //System.out.println(first + " " + last);
-
-            if (first == -1 || prefix.length() == 0) {               // prefix not found
-                continue;
-            }
-
-            List<Term> temp = new ArrayList<>(Arrays.asList(myTerms).subList(first, last + 1));
-            Collections.sort(temp, Comparator.comparing(Term::getWeight).reversed());
-
-            myMap.get(prefix).addAll(temp);
-
-            //System.out.println(prefix + myMap.get(prefix).toString());
-
-
-        }
 
     }
 
@@ -156,8 +128,8 @@ public class HashListAutocomplete implements Autocompletor{
         return mySize;
     }
 
-    private static void main(String[] args){
-        HashListAutocomplete test = new HashListAutocomplete(new String[]{""}, new double[]{2});
+    public static void main(String[] args){
+        HashListAutocomplete test = new HashListAutocomplete(new String[]{"ape", "app", "ban", "bat", "bee", "car", "cat"}, new double[]{6, 4, 2, 3, 5, 7, 1});
         System.out.println(test.topMatches("", 10));
         System.out.println(test.sizeInBytes());
     }

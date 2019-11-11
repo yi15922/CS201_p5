@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="eee8e1c0-9258-4427-9648-7544173e7585" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/P5-Autocomplete/BinarySearchAutocomplete.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/P5-Autocomplete/BinarySearchAutocomplete.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/P5-Autocomplete/HashListAutocomplete.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/P5-Autocomplete/HashListAutocomplete.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/P5-Autocomplete/SlowBruteAutocomplete.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/P5-Autocomplete/SlowBruteAutocomplete.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HashListAutocomplete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HashListAutocomplete.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,7 +55,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.BenchMarkForAutocomplete">
+  <component name="RunManager" selected="Application.HashListAutocomplete">
     <configuration name="AutocompleteMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AutocompleteMain" />
       <module name="P5-Autocomplete" />
@@ -92,8 +95,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.BenchMarkForAutocomplete" />
         <item itemvalue="Application.HashListAutocomplete" />
+        <item itemvalue="Application.BenchMarkForAutocomplete" />
         <item itemvalue="Application.AutocompleteMain" />
         <item itemvalue="JUnit.TestBinarySearchAutocomplete" />
         <item itemvalue="Application.BinaryBenchmark" />
