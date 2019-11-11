@@ -2,11 +2,6 @@ import java.util.*;
 
 
 
-// This is a temporary new branch to test another approach
-
-
-
-
 /**
  * Implements Autocompleter and uses a Map to store all possibe search results
  * Slow to initialize, but very fast a returning search results. Takes up more memory.
@@ -64,7 +59,8 @@ public class HashListAutocomplete implements Autocompletor{
 
 
     /**
-     * Initializes the object by populating the map with search results.
+     * Initializes the object by populating the map with Lists of search results,
+     * sorted by weight.
      *
      * @param terms is array of Strings for words in each Term
      * @param weights is corresponding weight for word in terms
@@ -85,7 +81,7 @@ public class HashListAutocomplete implements Autocompletor{
         for (String key : myMap.keySet()) {
             myMap.get(key).sort(Comparator.comparing(Term::getWeight).reversed());
         }
-        System.out.println(myMap.toString());
+        //System.out.println(myMap.toString());
 
 
     }
@@ -119,14 +115,12 @@ public class HashListAutocomplete implements Autocompletor{
 
             }
 
-
-
         }
         //System.out.println(mySize);
         return mySize;
     }
 
-    public static void main(String[] args){
+    private static void main(String[] args){
         HashListAutocomplete test = new HashListAutocomplete(new String[]{"ape", "app", "ban", "bat", "bee", "car", "cat", ""}, new double[]{6, 4, 2, 3, 5, 7, 1, 10});
         //System.out.println(test.topMatches("", 10));
         //System.out.println(test.sizeInBytes());
